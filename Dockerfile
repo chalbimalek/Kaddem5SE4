@@ -1,13 +1,7 @@
-FROM maven:3.8.4-openjdk-11 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn clean install -DskipTests
-
-# Second stage: Running the application
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY --from=build /app/target/kaddem-0.0.1-SNAPSHOT.jar /app/kaddem.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/kaddem.jar"]
+# Utiliser une image OpenJDK Runtime comme image parent
+FROM openjdk:17-jdk-alpine
+COPY target/kaddem-0.0.1-SNAPSHOT.jar .
+# Exposer le port sur lequel l'application va écouter
+EXPOSE 9040
+# Commande pour exécuter l'application Spring Boot
+ENTRYPOINT ["java", "-jar", "kaddem-0.0.1-SNAPSHOT.jar"]
