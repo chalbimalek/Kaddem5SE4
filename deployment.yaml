@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Kaddem_back-deployment
+  name: kaddem-back-deployment
 spec:
   replicas: 2
   selector:
