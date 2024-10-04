@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 
 class ContratServiceImplTest {
-    /*
+
 
     @Mock
     private ContratRepository contratRepository;
@@ -151,5 +151,5 @@ class ContratServiceImplTest {
 
     // Ajoutez d'autres tests unitaires pour les autres méthodes...
 
-*/
+
 }
