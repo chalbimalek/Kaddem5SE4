@@ -89,7 +89,6 @@
     </dependencies>
 
       <build>
-        <finalName>malekChalbi-G1-5SE4</finalName>
         <plugins>
             <!-- Spring Boot Plugin -->
             <plugin>
