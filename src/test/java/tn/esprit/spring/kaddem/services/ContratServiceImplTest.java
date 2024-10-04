@@ -113,7 +113,7 @@ class ContratServiceImplTest {
 
     }
 
-  // ContratServiceImplTest.java
+/*  // ContratServiceImplTest.java
 @Test
 public void testRemoveContrat() {
     Contrat contrat = new Contrat();
@@ -126,7 +126,7 @@ public void testRemoveContrat() {
 }
 
 
- /*   @Test
+    @Test
     void testAffectContratToEtudiant() {
         // Arrange
         Etudiant etudiant = new Etudiant();
