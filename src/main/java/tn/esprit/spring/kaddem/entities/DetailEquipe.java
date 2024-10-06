@@ -1,9 +1,17 @@
 package tn.esprit.spring.kaddem.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class DetailEquipe implements Serializable{
     @Id
@@ -13,9 +21,6 @@ public class DetailEquipe implements Serializable{
     private String thematique;
     @OneToOne(mappedBy="detailEquipe")
     private Equipe equipe;
-    public DetailEquipe() {
-        // TODO Auto-generated constructor stub
-    }
 
 
 

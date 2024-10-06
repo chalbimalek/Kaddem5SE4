@@ -1,6 +1,6 @@
 package tn.esprit.spring.kaddem.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
@@ -9,16 +9,12 @@ import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
 import java.util.List;
 import java.util.Set;
-
+@RequiredArgsConstructor
 @Service
 public class UniversiteServiceImpl implements IUniversiteService{
-@Autowired
-    UniversiteRepository universiteRepository;
-@Autowired
-    DepartementRepository departementRepository;
-    public UniversiteServiceImpl() {
-        // TODO Auto-generated constructor stub
-    }
+private final     UniversiteRepository universiteRepository;
+private final    DepartementRepository departementRepository;
+
   public   List<Universite> retrieveAllUniversites(){
 return (List<Universite>) universiteRepository.findAll();
     }

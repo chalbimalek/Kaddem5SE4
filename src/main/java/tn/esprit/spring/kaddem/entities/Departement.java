@@ -1,12 +1,19 @@
 package tn.esprit.spring.kaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.*;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Departement implements Serializable{
     @Id
@@ -16,19 +23,8 @@ public class Departement implements Serializable{
     @OneToMany(mappedBy="departement")
     @JsonIgnore
     private Set<Etudiant> etudiants;
-    public Departement() {
-    }
 
-    public Departement(String nomDepart) {
-        super();
-        this.nomDepart = nomDepart;
-    }
 
-    public Departement(Integer idDepart, String nomDepart) {
-        super();
-        this.idDepart = idDepart;
-        this.nomDepart = nomDepart;
-    }
 
 
 }
