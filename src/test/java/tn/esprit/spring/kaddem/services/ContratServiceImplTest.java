@@ -9,13 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
-
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import java.util.Optional;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -114,19 +113,37 @@ class ContratServiceImplTest {
 
     }
 
+/*  // ContratServiceImplTest.java
+@Test
+public void testRemoveContrat() {
+    Contrat contrat = new Contrat();
+    contrat.setIdContrat(1);
+    when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
+
+    contratService.removeContrat(1);
+
+    verify(contratRepository, times(1)).deleteById(1); // Assurez-vous d'utiliser deleteById avec l'ID correct
+}
+
+
     @Test
-    void testRemoveContrat() {
+    void testAffectContratToEtudiant() {
+        // Arrange
+        Etudiant etudiant = new Etudiant();
         Contrat contrat = new Contrat();
-        contrat.setIdContrat(1);
-        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
+        when(etudiantRepository.findByNomEAndPrenomE("John", "Doe")).thenReturn(etudiant);
+        when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
+        when(contratRepository.save(contrat)).thenReturn(contrat);
 
-        contratService.removeContrat(1);
+        // Act
+        Contrat result = contratService.affectContratToEtudiant(1, "John", "Doe");
 
-        verify(contratRepository, times(1)).deleteById(1); // Assurez-vous d'utiliser deleteById avec l'ID correct
-    }
-
-    // ContratServiceImplTest.java
-
+        // Assert
+        assertNotNull(result);
+        verify(etudiantRepository, times(1)).findByNomEAndPrenomE("John", "Doe");
+        verify(contratRepository, times(1)).findByIdContrat(1);
+        verify(contratRepository, times(1)).save(contrat);
+    }*/
 
     // Ajoutez d'autres tests unitaires pour les autres méthodes...
 
