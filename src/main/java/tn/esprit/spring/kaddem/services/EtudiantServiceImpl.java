@@ -1,5 +1,6 @@
 package tn.esprit.spring.kaddem.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,12 @@ import java.util.Set;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class EtudiantServiceImpl implements IEtudiantService{
-	@Autowired
-	EtudiantRepository etudiantRepository ;
-	@Autowired
-	ContratRepository contratRepository;
-	@Autowired
-	EquipeRepository equipeRepository;
-    @Autowired
-    DepartementRepository departementRepository;
+	private  final  EtudiantRepository etudiantRepository ;
+	private  final ContratRepository contratRepository;
+	private  final 	EquipeRepository equipeRepository;
+	private  final    DepartementRepository departementRepository;
 	public List<Etudiant> retrieveAllEtudiants(){
 	return (List<Etudiant>) etudiantRepository.findAll();
 	}
@@ -61,7 +59,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
 		Contrat c=contratRepository.findById(idContrat).orElse(null);
 		Equipe eq=equipeRepository.findById(idEquipe).orElse(null);
 		c.setEtudiant(e);
-		eq.getEtudiants().add(e);
+        assert eq != null;
+        eq.getEtudiants().add(e);
 return e;
 	}
 

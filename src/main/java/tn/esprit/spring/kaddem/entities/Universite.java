@@ -35,21 +35,5 @@ public class Universite implements Serializable{
         return departements;
     }
 
-    public void setDepartements(Set<Departement> departements) {
-        this.departements = departements;
-    }
-
-    public Integer getIdUniv() {
-        return idUniv;
-    }
-    public void setIdUniv(Integer idUniv) {
-        this.idUniv = idUniv;
-    }
-    public String getNomUniv() {
-        return nomUniv;
-    }
-    public void setNomUniv(String nomUniv) {
-        this.nomUniv = nomUniv;
-    }
 
 }
