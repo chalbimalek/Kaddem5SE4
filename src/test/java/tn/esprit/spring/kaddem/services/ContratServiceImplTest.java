@@ -22,8 +22,6 @@ import static org.mockito.Mockito.when;
 class ContratServiceImplTest {
 
 
-
-
     @Mock
     private ContratRepository contratRepository;
 
