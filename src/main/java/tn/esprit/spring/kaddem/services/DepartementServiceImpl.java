@@ -1,7 +1,6 @@
 package tn.esprit.spring.kaddem.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +8,7 @@ import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,9 +28,11 @@ public class DepartementServiceImpl implements IDepartementService{
 		return departementRepository.save(d);
 	}
 
-	public  Departement retrieveDepartement (Integer idDepart){
-		return departementRepository.findById(idDepart).get();
+	public Departement retrieveDepartement(Integer idDepart) {
+		Optional<Departement> departement = departementRepository.findById(idDepart);
+        return departement.orElse(null);
 	}
+
 	public  void deleteDepartement(Integer idDepartement){
 		Departement d=retrieveDepartement(idDepartement);
 		departementRepository.delete(d);
