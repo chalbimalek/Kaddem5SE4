@@ -1,7 +1,18 @@
-# Utiliser une image OpenJDK Runtime comme image parent
-FROM openjdk:17-jdk-alpine
-COPY target/kaddem-0.0.1-SNAPSHOT.jar .
-# Exposer le port sur lequel l'application va écouter
-EXPOSE 9040
-# Commande pour exécuter l'application Spring Boot
-ENTRYPOINT ["java", "-jar", "kaddem-0.0.1-SNAPSHOT.jar"]
+
+# Use the official Nginx image
+FROM nginx:1.23
+
+# Set the working directory in the container
+WORKDIR /usr/share/nginx/html
+
+# Remove any existing files in the working directory
+RUN rm -rf ./*
+
+# Copy the Angular build artifacts from the local machine to the Nginx server
+COPY dist/kaddem/ ./
+
+# Copy the custom Nginx configuration file to the appropriate location
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80 for the Nginx server
+EXPOSE 80
