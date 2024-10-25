@@ -1,5 +1,6 @@
 package tn.esprit.spring.kaddem.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,11 @@ import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import java.util.List;
 
 @Slf4j
-
+@RequiredArgsConstructor
 @Service
 public class DepartementServiceImpl implements IDepartementService{
-	@Autowired
-	DepartementRepository departementRepository;
+
+	private  final	DepartementRepository departementRepository;
 	public List<Departement> retrieveAllDepartements(){
 		return (List<Departement>) departementRepository.findAll();
 	}

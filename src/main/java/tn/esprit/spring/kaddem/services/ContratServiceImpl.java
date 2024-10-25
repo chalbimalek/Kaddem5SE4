@@ -1,6 +1,6 @@
 package tn.esprit.spring.kaddem.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +16,12 @@ import java.util.Set;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ContratServiceImpl implements IContratService{
-@Autowired
-ContratRepository contratRepository;
-@Autowired
-	EtudiantRepository etudiantRepository;
+private  final  ContratRepository contratRepository;
+	private  final	EtudiantRepository etudiantRepository;
 	public List<Contrat> retrieveAllContrats(){
-		return (List<Contrat>) contratRepository.findAll();
+		return contratRepository.findAll();
 	}
 
 	public Contrat updateContrat (Contrat  ce){
@@ -48,10 +47,10 @@ ContratRepository contratRepository;
 		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
 		Contrat ce=contratRepository.findByIdContrat(idContrat);
 		Set<Contrat> contrats= e.getContrats();
-		Integer nbContratssActifs=0;
+		int nbContratssActifs=0;
 		if (!contrats.isEmpty()) {
 			for (Contrat contrat : contrats) {
-				if (((contrat.getArchive())!=null)&& ((contrat.getArchive())))  {
+				if (((contrat.getArchive())!=null)&& Boolean.TRUE.equals((contrat.getArchive())))  {
 					nbContratssActifs++;
 				}
 			}
@@ -79,7 +78,8 @@ ContratRepository contratRepository;
 					log.info(" Contrat : " + contrat);
 				}
 				if (difference_In_Days==0) {
-					contratsAarchiver.add(contrat);
+                    assert false;
+                    contratsAarchiver.add(contrat);
 					contrat.setArchive(true);
 					contratRepository.save(contrat);
 				}
