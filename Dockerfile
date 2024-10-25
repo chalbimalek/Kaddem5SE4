@@ -1,18 +1,18 @@
+# Use an official Java runtime as a parent image
+FROM eclipse-temurin:17-jre-jammy
 
-# Use the official Nginx image
-FROM nginx:1.23
+# Set working directory in the container
+WORKDIR /app
 
-# Set the working directory in the container
-WORKDIR /usr/share/nginx/html
+# Download the .jar from Nexus
+RUN apt-get update && apt-get install -y curl
 
-# Remove any existing files in the working directory
-RUN rm -rf ./*
+# Replace <nexus-url>, <repository-path>, <artifact-id>, <version>, and <extension>
+RUN curl -o app.jar "http://192.168.33.11:8081/repository/maven-releases/tn.esprit.spring/gestion-station-ski/1.0/gestion-station-ski-1.0.jar"
 
-# Copy the Angular build artifacts from the local machine to the Nginx server
-COPY dist/kaddem/ ./
 
-# Copy the custom Nginx configuration file to the appropriate location
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Expose the port that the application runs on
+EXPOSE 9060
 
-# Expose port 80 for the Nginx server
-EXPOSE 80
+# Command to run the application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
