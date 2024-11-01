@@ -96,20 +96,22 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testAssignUniversiteToDepartement() {
-        // Arrange
-        Universite universite = new Universite();
-        Departement departement = new Departement();
-        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
-        when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
+void testAssignUniversiteToDepartement() {
+    // Arrange
+    Universite universite = new Universite();
+    universite.setDepartements(new HashSet<>()); // Initialize departements
+    Departement departement = new Departement();
+    when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+    when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
 
-        // Act
-        universiteService.assignUniversiteToDepartement(1, 1);
+    // Act
+    universiteService.assignUniversiteToDepartement(1, 1);
 
-        // Assert
-        assertTrue(universite.getDepartements().contains(departement));
-        verify(universiteRepository, times(1)).save(universite);
-    }
+    // Assert
+    assertTrue(universite.getDepartements().contains(departement));
+    verify(universiteRepository, times(1)).save(universite);
+}
+
 
     @Test
     void testRetrieveDepartementsByUniversite() {
