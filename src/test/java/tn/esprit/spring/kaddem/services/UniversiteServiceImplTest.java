@@ -20,9 +20,7 @@ import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
-
 class UniversiteServiceImplTest {
-
 
     @InjectMocks
     UniversiteServiceImpl universiteService;
@@ -96,22 +94,21 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-void testAssignUniversiteToDepartement() {
-    // Arrange
-    Universite universite = new Universite();
-    universite.setDepartements(new HashSet<>()); // Initialize departements
-    Departement departement = new Departement();
-    when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
-    when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
+    void testAssignUniversiteToDepartement() {
+        // Arrange
+        Universite universite = new Universite();
+        universite.setDepartements(new HashSet<>()); // Initialize departements
+        Departement departement = new Departement();
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
 
-    // Act
-    universiteService.assignUniversiteToDepartement(1, 1);
+        // Act
+        universiteService.assignUniversiteToDepartement(1, 1);
 
-    // Assert
-    assertTrue(universite.getDepartements().contains(departement));
-    verify(universiteRepository, times(1)).save(universite);
-}
-
+        // Assert
+        assertTrue(universite.getDepartements().contains(departement));
+        verify(universiteRepository, times(1)).save(universite);
+    }
 
     @Test
     void testRetrieveDepartementsByUniversite() {
@@ -127,5 +124,17 @@ void testAssignUniversiteToDepartement() {
         // Assert
         assertEquals(1, result.size());
         verify(universiteRepository, times(1)).findById(1);
+    }
+
+    // New test to handle the case where the universite is not found
+    @Test
+    void testRetrieveUniversiteNotFound() {
+        // Arrange
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NoSuchElementException.class, () -> {
+            universiteService.retrieveUniversite(1); // Should throw NoSuchElementException
+        });
     }
 }
