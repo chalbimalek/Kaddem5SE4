@@ -39,7 +39,7 @@ public Universite retrieveUniversite(Integer idUniversite) {
         if (optionalUniversite.isPresent()) {
             return optionalUniversite.get();
         } else {
-            throw new EntityNotFoundException("Universite not found with id: " + idUniversite);
+            throw new EntityNotFoundException("Universite is not found with id: " + idUniversite);
         }
     }
   
@@ -52,11 +52,11 @@ public Universite retrieveUniversite(Integer idUniversite) {
         Departement d = departementRepository.findById(idDepartement).orElse(null);
 
         if (u == null) {
-            throw new EntityNotFoundException("Universite not found with id: " + idUniversite);
+            throw new EntityNotFoundException("Universite nnot found with id: " + idUniversite);
         }
 
         if (d == null) {
-            throw new EntityNotFoundException("Departement not found with id: " + idDepartement);
+            throw new EntityNotFoundException("Departement nottt found with id: " + idDepartement);
         }
 
         u.getDepartements().add(d);
@@ -67,7 +67,7 @@ public Universite retrieveUniversite(Integer idUniversite) {
         Universite u = universiteRepository.findById(idUniversite).orElse(null);
 
         if (u == null) {
-            throw new EntityNotFoundException("Universite not found with id: " + idUniversite);
+            throw new EntityNotFoundException("Universite nooottt found with id: " + idUniversite);
         }
 
         return u.getDepartements();
