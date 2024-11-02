@@ -3,10 +3,12 @@ package tn.esprit.spring.kaddem.services;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.EntityNotFoundException;
 
 import lombok.var;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,4 +130,60 @@ void testAssignUniversiteToDepartement() {
         assertEquals(1, result.size());
         verify(universiteRepository, times(1)).findById(1);
     }
+    @Test
+void testRetrieveUniversiteNotFound() {
+    // Arrange
+    when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+    // Act & Assert
+    assertThrows(EntityNotFoundException.class, () -> {
+        universiteService.retrieveUniversite(1);
+    });
+}
+
+@Test
+void testDeleteUniversiteNotFound() {
+    // Arrange
+    when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+    // Act & Assert
+    assertThrows(EntityNotFoundException.class, () -> {
+        universiteService.deleteUniversite(1);
+    });
+}
+@Test
+void testAssignUniversiteToDepartementUniversiteNotFound() {
+    // Arrange
+    when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+    // Act & Assert
+    assertThrows(EntityNotFoundException.class, () -> {
+        universiteService.assignUniversiteToDepartement(1, 1);
+    });
+}
+
+@Test
+void testAssignUniversiteToDepartementDepartementNotFound() {
+    // Arrange
+    Universite universite = new Universite();
+    universite.setDepartements(new HashSet<>());
+    when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+    when(departementRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+    // Act & Assert
+    assertThrows(EntityNotFoundException.class, () -> {
+        universiteService.assignUniversiteToDepartement(1, 1);
+    });
+}
+@Test
+void testUpdateUniversiteNotFound() {
+    // Arrange
+    when(universiteRepository.save(any(Universite.class))).thenThrow(new EntityNotFoundException("Universite not found"));
+
+    // Act & Assert
+    assertThrows(EntityNotFoundException.class, () -> {
+        universiteService.updateUniversite(new Universite());
+    });
+}
+
 }
