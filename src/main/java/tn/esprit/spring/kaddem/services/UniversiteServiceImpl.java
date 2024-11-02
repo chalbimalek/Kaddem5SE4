@@ -6,6 +6,9 @@ import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
+import java.util.Optional; 
+import javax.persistence.EntityNotFoundException; 
+
 
 import java.util.List;
 import java.util.Set;
