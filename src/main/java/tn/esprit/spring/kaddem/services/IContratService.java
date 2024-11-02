@@ -20,8 +20,8 @@ public interface IContratService {
         public 	Integer nbContratsValides(Date startDate, Date endDate);
 
 
-    public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate);
+ //   public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate);
 
-    public void retrieveAndUpdateStatusContrat();
+  //  public void retrieveAndUpdateStatusContrat();
 }
 

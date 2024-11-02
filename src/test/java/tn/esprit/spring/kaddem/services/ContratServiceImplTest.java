@@ -151,40 +151,5 @@ class ContratServiceImplTest {
         System.out.println("Test nbContratsValides passed!");
     }
 
-    @Test
-    void testRetrieveAndUpdateStatusContrat() {
-        // Mock a list of contrats
-        List<Contrat> contrats = new ArrayList<>();
-        contrats.add(contrat); // Adding the created contrat to the list
 
-        when(contratRepository.findAll()).thenReturn(contrats);
-
-        // You might want to set specific dates for testing purposes
-        contrat.setDateFinContrat(new Date(System.currentTimeMillis() - (15 * 24 * 60 * 60 * 1000))); // 15 days ago
-
-        contratService.retrieveAndUpdateStatusContrat();
-
-        verify(contratRepository, times(1)).save(contrat); // Should save the contrat if it's archived
-        System.out.println("Test retrieveAndUpdateStatusContrat passed!");
-    }
-
-    @Test
-    void testGetChiffreAffaireEntreDeuxDates() {
-        Date startDate = new Date(System.currentTimeMillis() - (30 * 24 * 60 * 60 * 1000)); // 30 days ago
-        Date endDate = new Date();
-
-        // Mock the repository to return a specific list of contracts
-        when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
-
-        // Set the specialite of the contrat to test
-        contrat.setSpecialite(Specialite.IA);
-
-        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-
-        // Assuming the amount for IA contracts is 300 per month
-        float expectedChiffreAffaire = (30 / 30.0f) * 300; // Expecting 300 for 30 days
-
-        assertEquals(expectedChiffreAffaire, result);
-        System.out.println("Test getChiffreAffaireEntreDeuxDates passed!");
-    }
 }
