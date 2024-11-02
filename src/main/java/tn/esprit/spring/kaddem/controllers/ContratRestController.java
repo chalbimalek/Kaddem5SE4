@@ -58,7 +58,7 @@ public class ContratRestController {
 			return contratService.nbContratsValides(startDate, endDate);
 		}
 
-    @Scheduled(cron="0 0 13 * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
+   /* @Scheduled(cron="0 0 13 * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
 	@PutMapping(value = "/majStatusContrat")
 	public void majStatusContrat (){
 		//return 	(contratService.affectContratToEtudiant(ce, nomE, prenomE));
@@ -73,7 +73,7 @@ public class ContratRestController {
 	@PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
 
 		return contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-	}
+	}*/
 }
 
 
