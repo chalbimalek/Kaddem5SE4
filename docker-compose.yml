@@ -12,33 +12,35 @@ services:
     networks:
       - my-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+        test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 30s
     volumes:
       - mysql-data:/var/lib/mysql
 
   backend:
-    image: firasab/kaddem_back:latest  # Using your Spring Boot image from Docker Hub
-    container_name: backend-container
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5Dialect
-      SERVER_PORT: 8089
-      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
-      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    ports:
-      - "8089:8089"
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - my-network
+  image: firasab/kaddem_back:latest
+  container_name: backend-container
+  environment:
+    SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    SPRING_DATASOURCE_USERNAME: root
+    SPRING_DATASOURCE_PASSWORD: root
+    SPRING_JPA_SHOW_SQL: "true"
+    SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5Dialect
+    SERVER_PORT: 8089
+    MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+    MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
+  ports:
+    - "8089:8089"
+  depends_on:
+    mysql:
+      condition: service_healthy
+  networks:
+    - my-network
+  restart: always
 
   frontend:
     image: firasab/kaddem_front:latest  # Using your Angular image from Docker Hub
