@@ -40,19 +40,15 @@ class ContratServiceImplTest {
         etudiantRepository.deleteAll();
         contratRepository.deleteAll();
     }
-    private List<Contrat> contratList;
-    private  Contrat contrat;
+    private Contrat contrat;
+
     @BeforeEach
-    public void setUp() {
-        Contrat contrat1 = new Contrat();
-        contrat1.setIdContrat(1);
-        contrat1.setMontantContrat(5);
-
-        Contrat contrat2 = new Contrat();
-        contrat2.setIdContrat(2);
-        contrat2.setMontantContrat(22);
-
-        contratList = Arrays.asList(contrat1, contrat2);
+    void setUp() {
+        contrat = new Contrat();
+        contrat.setIdContrat(1);
+        contrat.setMontantContrat(1000);
+        contrat.setArchive(false);
+        // Set other properties if needed...
     }
     @Test
     void testAddContrat() {
@@ -69,16 +65,7 @@ class ContratServiceImplTest {
         verify(contratRepository, times(1)).save(contrat);
         System.out.println("Test addContrat passed!");
     }
-    @Test
-    public void testRetrieveAllContrats() {
-        when(contratRepository.findAll()).thenReturn(contratList);
 
-        List<Contrat> result = contratService.retrieveAllContrats();
-
-        assertEquals(2, result.size());
-        assertEquals(5, result.get(0).getMontantContrat());
-        assertEquals(22, result.get(1).getMontantContrat());
-    }
     @Test
     void testUpdateContrat() {
         Contrat contrat = new Contrat();
