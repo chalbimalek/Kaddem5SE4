@@ -97,7 +97,7 @@ class UniversiteServiceImplTest {
         verify(universiteRepository, times(1)).findById(1);
     }
 
-    @Test
+   @Test
 void testAssignUniversiteToDepartement() {
     // Arrange
     Universite universite = new Universite();
@@ -105,6 +105,7 @@ void testAssignUniversiteToDepartement() {
     Departement departement = new Departement();
     when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
     when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
+    when(universiteRepository.save(any(Universite.class))).thenReturn(universite); // Ensure save method is mocked
 
     // Act
     universiteService.assignUniversiteToDepartement(1, 1);
@@ -175,6 +176,7 @@ void testAssignUniversiteToDepartementDepartementNotFound() {
         universiteService.assignUniversiteToDepartement(1, 1);
     });
 }
+
 @Test
 void testUpdateUniversiteNotFound() {
     // Arrange
