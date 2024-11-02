@@ -1,14 +1,20 @@
 package tn.esprit.spring.kaddem.services;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
+
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +41,16 @@ class ContratServiceImplTest {
         etudiantRepository.deleteAll();
         contratRepository.deleteAll();
     }
+    private Contrat contrat;
 
+    @BeforeEach
+    void setUp() {
+        contrat = new Contrat();
+        contrat.setIdContrat(1);
+        contrat.setMontantContrat(1000);
+        contrat.setArchive(false);
+        // Set other properties if needed...
+    }
     @Test
     void testAddContrat() {
         Contrat contrat = new Contrat();
@@ -92,5 +107,84 @@ class ContratServiceImplTest {
 
     }
 
+    @Test
+    void testRemoveContrat() {
+        when(contratRepository.findById(1)).thenReturn(java.util.Optional.of(contrat));
 
+        contratService.removeContrat(1);
+
+        verify(contratRepository, times(1)).delete(contrat);
+        System.out.println("Test removeContrat passed!");
+    }
+
+    @Test
+    void testAffectContratToEtudiant() {
+        String nomE = "Doe";
+        String prenomE = "John";
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setNomE(nomE);
+        etudiant.setPrenomE(prenomE);
+        etudiant.setContrats(new HashSet<>());
+
+        when(etudiantRepository.findByNomEAndPrenomE(nomE, prenomE)).thenReturn(etudiant);
+        when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
+
+        Contrat updatedContrat = contratService.affectContratToEtudiant(1, nomE, prenomE);
+
+        assertNotNull(updatedContrat);
+        assertEquals(etudiant, updatedContrat.getEtudiant());
+        System.out.println("Test affectContratToEtudiant passed!");
+    }
+
+    @Test
+    void testNbContratsValides() {
+        Date startDate = new Date();
+        Date endDate = new Date();
+
+        when(contratRepository.getnbContratsValides(startDate, endDate)).thenReturn(5);
+
+        Integer result = contratService.nbContratsValides(startDate, endDate);
+
+        assertEquals(5, result);
+        verify(contratRepository, times(1)).getnbContratsValides(startDate, endDate);
+        System.out.println("Test nbContratsValides passed!");
+    }
+
+    @Test
+    void testRetrieveAndUpdateStatusContrat() {
+        // Mock a list of contrats
+        List<Contrat> contrats = new ArrayList<>();
+        contrats.add(contrat); // Adding the created contrat to the list
+
+        when(contratRepository.findAll()).thenReturn(contrats);
+
+        // You might want to set specific dates for testing purposes
+        contrat.setDateFinContrat(new Date(System.currentTimeMillis() - (15 * 24 * 60 * 60 * 1000))); // 15 days ago
+
+        contratService.retrieveAndUpdateStatusContrat();
+
+        verify(contratRepository, times(1)).save(contrat); // Should save the contrat if it's archived
+        System.out.println("Test retrieveAndUpdateStatusContrat passed!");
+    }
+
+    @Test
+    void testGetChiffreAffaireEntreDeuxDates() {
+        Date startDate = new Date(System.currentTimeMillis() - (30 * 24 * 60 * 60 * 1000)); // 30 days ago
+        Date endDate = new Date();
+
+        // Mock the repository to return a specific list of contracts
+        when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
+
+        // Set the specialite of the contrat to test
+        contrat.setSpecialite(Specialite.IA);
+
+        float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+
+        // Assuming the amount for IA contracts is 300 per month
+        float expectedChiffreAffaire = (30 / 30.0f) * 300; // Expecting 300 for 30 days
+
+        assertEquals(expectedChiffreAffaire, result);
+        System.out.println("Test getChiffreAffaireEntreDeuxDates passed!");
+    }
 }
