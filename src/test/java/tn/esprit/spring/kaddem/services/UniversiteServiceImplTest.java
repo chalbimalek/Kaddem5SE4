@@ -103,6 +103,8 @@ void testAssignUniversiteToDepartement() {
     Universite universite = new Universite();
     universite.setDepartements(new HashSet<>()); // Initialize departements
     Departement departement = new Departement();
+    
+    // Mocking repository behavior
     when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
     when(departementRepository.findById(anyInt())).thenReturn(Optional.of(departement));
     when(universiteRepository.save(any(Universite.class))).thenReturn(universite); // Ensure save method is mocked
@@ -114,6 +116,7 @@ void testAssignUniversiteToDepartement() {
     assertTrue(universite.getDepartements().contains(departement));
     verify(universiteRepository, times(1)).save(universite);
 }
+
 
 
     @Test
@@ -163,11 +166,12 @@ void testAssignUniversiteToDepartementUniversiteNotFound() {
     });
 }
 
+
 @Test
 void testAssignUniversiteToDepartementDepartementNotFound() {
     // Arrange
     Universite universite = new Universite();
-    universite.setDepartements(new HashSet<>());
+    universite.setDepartements(new HashSet<>()); // Ensure this is initialized
     when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
     when(departementRepository.findById(anyInt())).thenReturn(Optional.empty());
 
@@ -176,6 +180,7 @@ void testAssignUniversiteToDepartementDepartementNotFound() {
         universiteService.assignUniversiteToDepartement(1, 1);
     });
 }
+
 
 @Test
 void testUpdateUniversiteNotFound() {
