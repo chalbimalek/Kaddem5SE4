@@ -21,8 +21,9 @@ import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-
+@ExtendWith(MockitoExtension.class)
 class UniversiteServiceImplTest {
 
 
