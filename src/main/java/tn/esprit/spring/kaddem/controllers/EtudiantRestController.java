@@ -10,6 +10,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")  // Allow the Angular app
+
 @RequestMapping("/etudiant")
 public class EtudiantRestController {
 	@Autowired

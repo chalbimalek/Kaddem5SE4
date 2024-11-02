@@ -12,6 +12,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")  // Allow the Angular app
+
 @RequestMapping("/contrat")
 public class ContratRestController {
 	private final IContratService contratService;
