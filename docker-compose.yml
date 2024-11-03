@@ -20,9 +20,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   backend:
-    build:
-      context: C:/Users/mchal/Desktop/kaddem/kaddem
-      dockerfile: Dockerfile
+    image: malekch10/kaddem:latest
     container_name: backend-container
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true
@@ -43,9 +41,7 @@ services:
       - my-network
 
   frontend:
-    build:
-      context: C:/Users/mchal/Desktop/Kadem5se4
-      dockerfile: Dockerfile
+    image: malekch10/front-g1-kaddem:latest  # Using your Angular image from Docker Hub
     container_name: frontend-container
     ports:
       - "4200:80"
