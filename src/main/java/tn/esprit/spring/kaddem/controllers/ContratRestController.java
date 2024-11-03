@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/contrat")
 public class ContratRestController {
 	private final IContratService contratService;
-	@GetMapping("/retrieve-all-contrats")
+	@GetMapping("/retrieve-all-contrat")
 	public List<Contrat> getContrats() {
 		return contratService.retrieveAllContrats();
 	}
