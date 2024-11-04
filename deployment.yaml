@@ -101,6 +101,6 @@ spec:
     app: back-app
   ports:
   - protocol: TCP
-    port: 80         # Port exposed on the Service
+    port: 8090         # Port exposed on the Service
     targetPort: 8080 # Port on the Pod that the Service forwards traffic to
   type: LoadBalancer  # Or NodePort depending on your environment
