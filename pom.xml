@@ -3,9 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-
-
-             
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.5</version>
@@ -14,7 +11,7 @@
     <groupId>tn.esprit.spring</groupId>
     <artifactId>kaddem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-         <packaging>jar</packaging>
+    <packaging>jar</packaging>
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
@@ -29,8 +26,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-                    <!-- JUnit 5 -->
+             <!-- JUnit 5 -->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-api</artifactId>
@@ -52,7 +48,17 @@
         <version>3.9.0</version>
         <scope>test</scope>
     </dependency>
+    
 
+             
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-prometheus</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -91,13 +97,8 @@
                     </excludes>
                 </configuration>
             </plugin>
-         <plugin>
-             <groupId>org.sonarsource.scanner.maven</groupId>
-             <artifactId>sonar-maven-plugin</artifactId>
-             <version>4.0.0.4121</version> <!-- Or the latest version -->
-         </plugin>
 
-            <plugin>
+         <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.8</version> <!-- Use the latest stable version -->
@@ -117,7 +118,15 @@
                 </execution>
             </executions>
         </plugin>
-                 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
