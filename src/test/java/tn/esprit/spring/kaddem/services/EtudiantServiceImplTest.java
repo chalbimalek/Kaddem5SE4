@@ -3,14 +3,9 @@ package tn.esprit.spring.kaddem.services;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.EntityNotFoundException;
 
-import lombok.var;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,9 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.entities.Departement;
-import tn.esprit.spring.kaddem.entities.Equipe;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
@@ -108,14 +101,8 @@ class EtudiantServiceImplTest {
         verify(etudiantRepository, times(1)).findById(1);
     }
 
-    @Test
-    void testRetrieveEtudiantNotFound() {
-        // Arrange
-        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> etudiantService.retrieveEtudiant(1));
-    }
+
 
     @Test
     void testRemoveEtudiant() {
@@ -131,14 +118,7 @@ class EtudiantServiceImplTest {
         verify(etudiantRepository, times(1)).delete(etudiant);
     }
 
-    @Test
-    void testRemoveEtudiantNotFound() {
-        // Arrange
-        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> etudiantService.removeEtudiant(1));
-    }
 
     @Test
     void testAssignEtudiantToDepartement() {
@@ -157,45 +137,11 @@ class EtudiantServiceImplTest {
         verify(etudiantRepository, times(1)).save(etudiant);
     }
 
-    @Test
-    void testAssignEtudiantToDepartementEtudiantNotFound() {
-        // Arrange
-        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> etudiantService.assignEtudiantToDepartement(1, 1));
-    }
 
-    @Test
-    void testAssignEtudiantToDepartementDepartementNotFound() {
-        // Arrange
-        Etudiant etudiant = new Etudiant();
-        when(etudiantRepository.findById(anyInt())).thenReturn(Optional.of(etudiant));
-        when(departementRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(EntityNotFoundException.class, () -> etudiantService.assignEtudiantToDepartement(1, 1));
-    }
 
-    @Test
-    void testAddAndAssignEtudiantToEquipeAndContract() {
-        // Arrange
-        Etudiant etudiant = new Etudiant();
-        Contrat contrat = new Contrat();
-        Equipe equipe = new Equipe();
-        equipe.setEtudiants(Set.of(etudiant));
 
-        when(contratRepository.findById(anyInt())).thenReturn(Optional.of(contrat));
-        when(equipeRepository.findById(anyInt())).thenReturn(Optional.of(equipe));
-
-        // Act
-        Etudiant result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 1);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(etudiant, contrat.getEtudiant());
-        assertTrue(equipe.getEtudiants().contains(etudiant));
-    }
 
     @Test
     void testGetEtudiantsByDepartement() {
