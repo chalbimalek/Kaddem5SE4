@@ -20,7 +20,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   backend:
-    image: malekch10/kaddem:latest
+    image: malekch10/backendkaddem:latest
     container_name: backend-container
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem?createDatabaseIfNotExist=true
